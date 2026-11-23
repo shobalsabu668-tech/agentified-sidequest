@@ -6,136 +6,205 @@
     <meta name="referrer" content="no-referrer">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https: http:; frame-src 'self' https: http:; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
     <meta name="description" content="Turn a free hour on campus into a small adventure. Find activities from independent student groups. No profile or booking needed.">
-    <meta name="theme-color" content="#f7f7f1">
+    <meta name="theme-color" content="#0a0a0a">
     <title>Campus Sidequest | Make an hour yours</title>
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%237166e8'/%3E%3Cpath d='M9 22 22 9M11 10h11v11' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237b2ff7'/%3E%3Cstop offset='.5' stop-color='%23f107a3'/%3E%3Cstop offset='1' stop-color='%23ffb627'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='9' fill='%230a0a0a'/%3E%3Cpath d='M16 16C11 7 4 8 5 14s6 5 11 2Zm0 0c5-9 12-8 11-2s-6 5-11 2Zm0 0c-4 3-7 9-3 10s3-6 3-10Zm0 0c4 3 7 9 3 10s-3-6-3-10Z' fill='url(%23g)'/%3E%3C/svg%3E">
+    <link rel="preload" href="fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="styles.css">
+    <script src="fx-boot.js"></script>
+    <script defer src="vendor/gsap.min.js"></script>
+    <script defer src="vendor/ScrollTrigger.min.js"></script>
+    <script defer src="vendor/SplitText.min.js"></script>
+    <script defer src="vendor/ScrambleTextPlugin.min.js"></script>
+    <script defer src="fx.js"></script>
     <script type="module" src="sidequest.js"></script>
   </head>
   <body>
     <a class="skip" href="#main">Skip to the planner</a>
     <header class="topbar">
-      <div class="shell nav-row">
-        <a class="wordmark" href="./" aria-label="Campus Sidequest home"><span class="brand-icon" aria-hidden="true">↗</span><span>sidequest<span class="brand-campus"> / campus</span></span></a>
+      <div class="nav-row">
+        <a class="wordmark" href="./" aria-label="Campus Sidequest home"><span class="brand-icon" aria-hidden="true">}{</span><span>sidequest<span class="brand-campus"> / campus</span></span></a>
         <nav aria-label="Main navigation"><a href="#planner">Make a plan</a><a href="#how-it-works">How it works</a><a href="#partners">Activity sites</a></nav>
-        <a class="nav-button" href="#planner">Find my hour <span aria-hidden="true">→</span></a>
+        <a class="nav-button btn btn-primary btn-sm" href="#planner">Find my hour <span aria-hidden="true">→</span></a>
       </div>
     </header>
 
     <main id="main">
-      <section class="hero">
-        <div class="shell hero-grid">
-          <div class="hero-copy">
-            <p class="eyebrow"><span class="sparkle" aria-hidden="true">✳</span> A LITTLE ADVENTURE, RIGHT ON CAMPUS</p>
-            <h1>Make an hour<br>of your day <span>yours.</span></h1>
-            <p class="hero-lede">Find something fun to do between classes. Pick a mood, set your time and budget, and we’ll make you a small plan from campus groups.</p>
-            <a class="hero-cta" href="#planner">Build my sidequest <span aria-hidden="true">↓</span></a>
-            <p class="reassurance"><span aria-hidden="true">✓</span> No account. No booking. Your picks are not sent to activity groups.</p>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-card">
+          <canvas class="ascii-field" aria-hidden="true"></canvas>
+          <div class="hero-hud" aria-hidden="true">
+            <span class="hud-tl"><i class="live-dot"></i> LIVE / CAMPUS.SIDEQUEST</span>
+            <span class="hud-tr">SAND <b data-hud="sand">100%</b></span>
+            <span class="hud-bl">MEET · MAKE · MOVE</span>
+            <span class="hud-br"><b data-hud="left">60:00</b> OF YOUR HOUR LEFT</span>
           </div>
-          <div class="hero-art" aria-label="Preview of a two-stop campus sidequest" role="img">
-            <div class="art-sun"></div><div class="sticker sticker-top">MAKE<br>YOUR<br>BREAK <span>✳</span></div>
-            <div class="quest-ticket">
-              <div class="ticket-top"><span>YOUR NEXT HOUR</span><span class="ticket-status"><i></i> READY WHEN YOU ARE</span></div>
-              <div class="ticket-line"><span class="ticket-number">01</span><span class="ticket-detail"><strong>Make something</strong><small>A tiny zine at Makers Studio</small></span><span class="ticket-time">25 min</span></div>
-              <div class="ticket-connector"><i></i><i></i><i></i><i></i><i></i></div>
-              <div class="ticket-line"><span class="ticket-number ticket-number-blue">02</span><span class="ticket-detail"><strong>Meet your people</strong><small>Quick game at Campus Games</small></span><span class="ticket-time">20 min</span></div>
-              <div class="ticket-bottom"><span>2 INDEPENDENT CAMPUS SPACES</span><span class="ticket-stamp">$0</span></div>
+          <div class="hero-content">
+            <div class="hero-copy">
+              <p class="hero-badge"><span class="badge-mark" aria-hidden="true">✳</span><span class="badge-text">A little adventure, right on campus</span></p>
+              <h1 id="hero-title" class="hero-title">Make an hour<br>of your day <span class="grad-text">yours.</span></h1>
+              <p class="hero-lede">Find something fun to do between classes. Pick a mood, set your time and budget, and we’ll make you a small plan from campus groups.</p>
+              <div class="hero-actions">
+                <a class="hero-cta btn btn-primary" href="#planner">Build my sidequest <span aria-hidden="true">↓</span></a>
+                <a class="btn btn-ghost" href="#how-it-works"><span class="btn-mono" aria-hidden="true">[?]</span> How it works</a>
+              </div>
+              <p class="reassurance"><span aria-hidden="true">✓</span> No account. No booking. Your picks are not sent to activity groups.</p>
             </div>
-            <div class="doodle-arrow" aria-hidden="true">↗</div>
-            <div class="art-note">A good break<br>doesn’t need a plan.<br><b>Until now.</b></div>
-          </div>
-          <div class="hero-steps" id="how-it-works">
-            <div><span class="step-no">01</span><span><strong>Pick your vibe</strong><small>Meet, make, or move</small></span></div>
-            <span class="steps-divider" aria-hidden="true"></span>
-            <div><span class="step-no">02</span><span><strong>Set your limits</strong><small>Time and budget</small></span></div>
-            <span class="steps-divider" aria-hidden="true"></span>
-            <div><span class="step-no">03</span><span><strong>Get out there</strong><small>A plan from campus groups</small></span></div>
+            <div class="hero-visual" aria-hidden="true">
+              <canvas class="hourglass"></canvas>
+              <span class="visual-caption">fig.01 — one hour, in ascii · click to flip</span>
+            </div>
           </div>
         </div>
       </section>
 
-      <div class="shell page-content">
-        <section id="planner" class="planner panel" aria-label="Plan a campus activity">
-          <section class="chat-agent side-agent" aria-label="Chat with Sidequest" data-mode="quick">
-            <div class="chat-agent-heading"><span class="agent-mark" aria-hidden="true">✳</span><span><strong>Sidequest agent</strong><small>Tell me what you feel like doing.</small></span></div>
-            <div class="agent-mode" role="group" aria-label="Chat mode">
-              <button type="button" id="mode-quick" aria-pressed="true"><span>Quick chat</span><small>No key needed</small></button>
-              <button type="button" id="mode-ai" aria-pressed="false"><span>AI agent</span><small>Uses your AI key</small></button>
-            </div>
-            <div id="quick-pane">
-              <div class="chat-messages" id="chat-messages" role="log" aria-live="polite" aria-relevant="additions">
-                <p class="chat-message assistant-message">Hey! Tell me what you feel like doing and how much time or money you have, like “cards for 30 minutes, free”. I’ll read the campus groups’ public lists after you approve.</p>
-              </div>
-              <form id="chat-form" class="chat-form">
-                <label class="visually-hidden" for="chat-input">Message Sidequest</label>
-                <input id="chat-input" name="message" type="text" maxlength="300" placeholder="Message Sidequest…" autocomplete="off" required>
-                <button id="chat-send" type="submit" class="build-button">Send <span aria-hidden="true">↗</span></button>
-              </form>
-              <p class="chat-footnote">Quick chat runs on this page and understands activities, time and budget. Say “start over” to clear. For free-form conversation, switch to the AI agent.</p>
-            </div>
-            <div id="ai-pane" hidden>
-              <p class="ai-intro">Runs this site’s agent network in your browser, on your own AI key. It sets up the planner, builds plans after you approve, and can ask each group’s own agent what it offers.</p>
-              <p id="assistant-status" class="ai-status" role="status">Loading the agent…</p>
-              <div id="agent-app">
-                <div data-ns-slot="header"></div>
-                <div data-ns-slot="chat"></div>
-                <div data-ns-slot="agents"></div>
-                <div data-ns-slot="settings"></div>
-              </div>
-            </div>
-          </section>
-          <form id="quest-form">
-            <fieldset class="choice-group"><legend>Pick a vibe</legend><div class="choice-row" id="mood-options">
-              <label class="choice-card"><input type="radio" name="mood" value="meet" checked><span class="choice-emoji" aria-hidden="true">☺</span><span class="choice-title">Meet people</span><span class="choice-desc">Low-pressure and social</span></label>
-              <label class="choice-card"><input type="radio" name="mood" value="make"><span class="choice-emoji" aria-hidden="true">✎</span><span class="choice-title">Make something</span><span class="choice-desc">Try a quick creative activity</span></label>
-              <label class="choice-card"><input type="radio" name="mood" value="move"><span class="choice-emoji" aria-hidden="true">↗</span><span class="choice-title">Get moving</span><span class="choice-desc">Explore or stretch your legs</span></label>
-            </div></fieldset>
-            <div class="activity-prompt"><label for="activity-request">Anything specific? <span class="optional">Optional</span></label><input id="activity-request" name="activityRequest" type="search" maxlength="100" placeholder="zine, card game, puzzle, photo walk…"><small>Leave it blank to match your vibe.</small></div>
-            <div class="limits-row">
-              <fieldset class="choice-group compact-group"><legend>How much time?</legend><div class="segmented">
-                <label><input type="radio" name="time" value="30"><span>30 min</span></label><label><input type="radio" name="time" value="60" checked><span>1 hour</span></label><label><input type="radio" name="time" value="90"><span>90 min</span></label>
-              </div></fieldset>
-              <fieldset class="choice-group compact-group"><legend>How much could you spend?</legend><div class="segmented">
-                <label><input type="radio" name="budget" value="0" checked><span>Free</span></label><label><input type="radio" name="budget" value="5"><span>Up to $5</span></label><label><input type="radio" name="budget" value="10"><span>Up to $10</span></label>
-              </div></fieldset>
-            </div>
-            <div class="planner-actions"><button class="build-button" id="build-quest" type="submit">Generate activity <span aria-hidden="true">↗</span></button><p class="private-hint"><span aria-hidden="true">⌑</span> Your choices stay here; you approve before public activity lists are read. <button type="button" id="forget-consent" class="link-button" hidden>Ask me each time</button></p></div>
-          </form>
-          <p id="planner-status" class="status-line" role="status" aria-live="polite"></p>
-          <ol id="agent-steps" class="agent-steps" aria-label="Sidequest agent progress" hidden>
-            <li id="agent-step-maker" data-state="waiting"><span class="agent-step-icon" aria-hidden="true"></span><span class="agent-step-copy">Makers Studio</span></li>
-            <li id="agent-step-games" data-state="waiting"><span class="agent-step-icon" aria-hidden="true"></span><span class="agent-step-copy">Campus Games</span></li>
-            <li id="agent-step-match" data-state="waiting"><span class="agent-step-icon" aria-hidden="true"></span><span class="agent-step-copy">Match your choices</span></li>
-          </ol>
-          <section id="quest-result" class="quest-result" aria-live="polite" hidden></section>
-          <section class="quest-progress" aria-label="Your Sidequest progress">
-            <div><p class="quest-kicker">YOUR ADVENTURE LOG</p><strong><span id="quests-completed">0</span> quests finished</strong><small id="quest-badges">First Steps badge is waiting for you.</small></div>
-            <span class="progress-medal" aria-hidden="true">✳</span>
-          </section>
-        </section>
-
-        <section class="partners-section" id="partners" aria-labelledby="partners-heading">
-          <div class="section-title"><div><p class="eyebrow eyebrow-dark">THE PEOPLE BEHIND THE PLAN</p><h2 id="partners-heading">Campus-made, not scraped.</h2></div><p>Each group shares its own activities. You choose before we contact them.</p></div>
-          <div class="partner-grid">
-            <a class="partner-card maker-card" href="http://localhost:8081/" target="_blank" rel="noopener"><span class="partner-icon">✳</span><span class="partner-meta">CREATE · MAKER SPACE</span><strong>Makers Studio</strong><span class="partner-copy">Tiny projects, zines and hands-on breaks.</span><span class="partner-link">Explore the studio <b>↗</b></span></a>
-            <a class="partner-card games-card" href="http://[::1]:8083/" target="_blank" rel="noopener"><span class="partner-icon">⌘</span><span class="partner-meta">PLAY · STUDENT CLUB</span><strong>Campus Games</strong><span class="partner-copy">Quick games and friendly challenges.</span><span class="partner-link">Visit the club <b>↗</b></span></a>
-          </div>
-        </section>
-
-        <aside class="demo-disclosure"><span class="disclosure-icon">i</span><p><strong>Demo campus.</strong> Activities shown are sample listings from independent demo sites. Check each group’s page for current details. Sidequest doesn’t register or pay for anything.</p></aside>
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee-track">
+          <span>MEET PEOPLE</span><i>✳</i><span>MAKE SOMETHING</span><i>✳</i><span>GET MOVING</span><i>✳</i><span>30 MIN</span><i>✳</i><span>FREE</span><i>✳</i><span>NO ACCOUNT</span><i>✳</i><span>NO BOOKING</span><i>✳</i>
+          <span>MEET PEOPLE</span><i>✳</i><span>MAKE SOMETHING</span><i>✳</i><span>GET MOVING</span><i>✳</i><span>30 MIN</span><i>✳</i><span>FREE</span><i>✳</i><span>NO ACCOUNT</span><i>✳</i><span>NO BOOKING</span><i>✳</i>
+        </div>
       </div>
+
+      <section class="section how" id="how-it-works" aria-labelledby="how-title">
+        <div class="shell">
+          <div class="section-head reveal">
+            <p class="kicker">/ how it works</p>
+            <h2 id="how-title" class="split-head">Three taps.<br><span class="muted">One small adventure.</span></h2>
+          </div>
+          <ol class="steps-grid">
+            <li class="step-card reveal">
+<pre class="step-ascii" aria-hidden="true">   .-""""-.
+  /  o  o  \
+ |   \__/   |
+  \        /
+   '-....-'</pre>
+              <span class="step-no">01</span><strong>Pick your vibe</strong><p>Meet, make, or move. Or just tell the chat what you feel like.</p>
+            </li>
+            <li class="step-card reveal">
+<pre class="step-ascii" aria-hidden="true">    .----.
+   /  12  \
+  |9  o--  3|
+   \   6  /
+    '----'  $0</pre>
+              <span class="step-no">02</span><strong>Set your limits</strong><p>Time and budget. Thirty minutes and free is plenty.</p>
+            </li>
+            <li class="step-card reveal">
+<pre class="step-ascii" aria-hidden="true">            |&gt;
+   o  .......|
+  /|\ .      |
+  / \  ......*</pre>
+              <span class="step-no">03</span><strong>Get out there</strong><p>A plan from campus groups, ranked right here in your browser.</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section planner-section" aria-labelledby="planner-title">
+        <div class="shell">
+          <div class="section-head reveal">
+            <p class="kicker">/ planner</p>
+            <h2 id="planner-title" class="split-head">Build your sidequest.<br><span class="muted">You approve before anything is read.</span></h2>
+          </div>
+          <section id="planner" class="planner" aria-label="Plan a campus activity">
+            <section class="chat-agent side-agent" aria-label="Chat with Sidequest" data-mode="quick">
+              <div class="chat-agent-heading"><span class="agent-mark" aria-hidden="true">✳</span><span><strong>Sidequest agent</strong><small>Tell me what you feel like doing.</small></span><i class="agent-live" aria-hidden="true"></i></div>
+              <div class="agent-mode" role="group" aria-label="Chat mode">
+                <button type="button" id="mode-quick" aria-pressed="true"><span>Quick chat</span><small>No key needed</small></button>
+                <button type="button" id="mode-ai" aria-pressed="false"><span>AI agent</span><small>Uses your AI key</small></button>
+              </div>
+              <div id="quick-pane">
+                <div class="chat-messages" id="chat-messages" role="log" aria-live="polite" aria-relevant="additions">
+                  <p class="chat-message assistant-message">Hey! Tell me what you feel like doing and how much time or money you have, like “cards for 30 minutes, free”. I’ll read the campus groups’ public lists after you approve.</p>
+                </div>
+                <form id="chat-form" class="chat-form">
+                  <label class="visually-hidden" for="chat-input">Message Sidequest</label>
+                  <input id="chat-input" name="message" type="text" maxlength="300" placeholder="Message Sidequest…" autocomplete="off" required>
+                  <button id="chat-send" type="submit" class="build-button btn btn-primary">Send <span aria-hidden="true">↗</span></button>
+                </form>
+                <p class="chat-footnote">Quick chat runs on this page and understands activities, time and budget. Say “start over” to clear. For free-form conversation, switch to the AI agent.</p>
+              </div>
+              <div id="ai-pane" hidden>
+                <p class="ai-intro">Runs this site’s agent network in your browser, on your own AI key. It sets up the planner, builds plans after you approve, and can ask each group’s own agent what it offers.</p>
+                <p id="assistant-status" class="ai-status" role="status">Loading the agent…</p>
+                <div id="agent-app">
+                  <div data-ns-slot="header"></div>
+                  <div data-ns-slot="chat"></div>
+                  <div data-ns-slot="agents"></div>
+                  <div data-ns-slot="settings"></div>
+                </div>
+              </div>
+            </section>
+
+            <div class="planner-main">
+              <form id="quest-form">
+                <fieldset class="choice-group"><legend><span class="legend-no">01</span>Pick a vibe</legend><div class="choice-row" id="mood-options">
+                  <label class="choice-card"><input type="radio" name="mood" value="meet" checked><span class="choice-emoji" aria-hidden="true">:-)</span><span class="choice-title">Meet people</span><span class="choice-desc">Low-pressure and social</span></label>
+                  <label class="choice-card"><input type="radio" name="mood" value="make"><span class="choice-emoji" aria-hidden="true">/~/</span><span class="choice-title">Make something</span><span class="choice-desc">Try a quick creative activity</span></label>
+                  <label class="choice-card"><input type="radio" name="mood" value="move"><span class="choice-emoji" aria-hidden="true">&gt;&gt;&gt;</span><span class="choice-title">Get moving</span><span class="choice-desc">Explore or stretch your legs</span></label>
+                </div></fieldset>
+                <div class="activity-prompt"><label for="activity-request"><span class="legend-no">02</span>Anything specific? <span class="optional">Optional</span></label><input id="activity-request" name="activityRequest" type="search" maxlength="100" placeholder="zine, card game, puzzle, photo walk…"><small>Leave it blank to match your vibe.</small></div>
+                <div class="limits-row">
+                  <fieldset class="choice-group compact-group"><legend><span class="legend-no">03</span>How much time?</legend><div class="segmented">
+                    <label><input type="radio" name="time" value="30"><span>30 min</span></label><label><input type="radio" name="time" value="60" checked><span>1 hour</span></label><label><input type="radio" name="time" value="90"><span>90 min</span></label>
+                  </div></fieldset>
+                  <fieldset class="choice-group compact-group"><legend><span class="legend-no">04</span>How much could you spend?</legend><div class="segmented">
+                    <label><input type="radio" name="budget" value="0" checked><span>Free</span></label><label><input type="radio" name="budget" value="5"><span>Up to $5</span></label><label><input type="radio" name="budget" value="10"><span>Up to $10</span></label>
+                  </div></fieldset>
+                </div>
+                <div class="planner-actions"><button class="build-button btn btn-primary btn-lg" id="build-quest" type="submit">Generate activity <span aria-hidden="true">↗</span></button><p class="private-hint"><span aria-hidden="true">⌑</span> Your choices stay here; you approve before public activity lists are read. <button type="button" id="forget-consent" class="link-button" hidden>Ask me each time</button></p></div>
+              </form>
+              <p id="planner-status" class="status-line" role="status" aria-live="polite"></p>
+              <ol id="agent-steps" class="agent-steps" aria-label="Sidequest agent progress" hidden>
+                <li id="agent-step-maker" data-state="waiting"><span class="agent-step-icon" aria-hidden="true"></span><span class="agent-step-copy">Makers Studio</span></li>
+                <li id="agent-step-games" data-state="waiting"><span class="agent-step-icon" aria-hidden="true"></span><span class="agent-step-copy">Campus Games</span></li>
+                <li id="agent-step-match" data-state="waiting"><span class="agent-step-icon" aria-hidden="true"></span><span class="agent-step-copy">Match your choices</span></li>
+              </ol>
+              <section id="quest-result" class="quest-result" aria-live="polite" hidden></section>
+              <section class="quest-progress" aria-label="Your Sidequest progress">
+                <div><p class="quest-kicker">YOUR ADVENTURE LOG</p><strong><span id="quests-completed">0</span> quests finished</strong><small id="quest-badges">First Steps badge is waiting for you.</small></div>
+                <span class="progress-medal" aria-hidden="true">✳</span>
+              </section>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="section partners-section" id="partners" aria-labelledby="partners-heading">
+        <div class="shell">
+          <div class="section-head reveal">
+            <p class="kicker">/ the people behind the plan</p>
+            <h2 id="partners-heading" class="split-head">Campus-made, not scraped.<br><span class="muted">Each group shares its own activities.</span></h2>
+          </div>
+          <div class="partner-grid">
+            <a class="partner-card maker-card" href="http://localhost:8081/" target="_blank" rel="noopener"><span class="partner-icon" aria-hidden="true">{*}</span><span class="partner-meta">CREATE · MAKER SPACE</span><strong>Makers Studio</strong><span class="partner-copy">Tiny projects, zines and hands-on breaks.</span><span class="partner-link">Explore the studio <b>↗</b></span></a>
+            <a class="partner-card games-card" href="http://[::1]:8083/" target="_blank" rel="noopener"><span class="partner-icon" aria-hidden="true">[#]</span><span class="partner-meta">PLAY · STUDENT CLUB</span><strong>Campus Games</strong><span class="partner-copy">Quick games and friendly challenges.</span><span class="partner-link">Visit the club <b>↗</b></span></a>
+          </div>
+          <aside class="demo-disclosure reveal"><span class="disclosure-icon">i</span><p><strong>Demo campus.</strong> Activities shown are sample listings from independent demo sites. Check each group’s page for current details. Sidequest doesn’t register or pay for anything. You choose before we contact them.</p></aside>
+        </div>
+      </section>
+
+      <section class="finale" aria-labelledby="finale-title">
+        <canvas class="finale-ascii" aria-hidden="true"></canvas>
+        <canvas class="finale-liquid" aria-hidden="true"></canvas>
+        <div class="finale-inner">
+          <p class="finale-kicker">DARK HOURS + BRIGHT BREAKS</p>
+          <h2 id="finale-title" class="finale-title">Make your<br>break.</h2>
+          <a class="btn btn-dark btn-lg" href="#planner">Find my hour <span aria-hidden="true">→</span></a>
+        </div>
+      </section>
     </main>
 
-    <footer class="footer"><div class="shell footer-row"><a class="wordmark" href="./"><span class="brand-icon">↗</span><span>sidequest<span class="brand-campus"> / campus</span></span></a><span>Small plans. More campus life.</span><span class="footer-links">An open agentic web demo · <a href="agent-manifest.json">Agent files</a></span></div></footer>
+    <footer class="footer"><div class="footer-row"><a class="wordmark" href="./"><span class="brand-icon" aria-hidden="true">}{</span><span>sidequest<span class="brand-campus"> / campus</span></span></a><span>Small plans. More campus life.</span><span class="footer-links">An open agentic web demo · <a href="agent-manifest.json">Agent files</a></span></div></footer>
 
     <dialog id="contact-dialog" class="consent-dialog" aria-labelledby="contact-title">
       <form method="dialog" class="dialog-inner">
-        <p class="eyebrow eyebrow-dark">BEFORE WE ASK</p><h2 id="contact-title">Check these activity lists?</h2>
+        <p class="kicker">/ before we ask</p><h2 id="contact-title">Check these activity lists?</h2>
           <p class="dialog-copy">We’ll read public listings from the two independent campus sites. Your message, activity request, mood, time and budget are not sent to either group.</p>
         <div class="contact-sites" id="contact-sites"></div>
         <div class="dialog-data"><span>Shared with the sites</span><strong>Nothing personal</strong></div>
         <label class="remember-consent"><input type="checkbox" id="remember-consent"> Don’t ask again in this tab</label>
-        <div class="dialog-actions"><button value="cancel" class="cancel-button">Not now</button><button id="allow-contact" value="allow" class="build-button">Read activities <span>→</span></button></div>
+        <div class="dialog-actions"><button value="cancel" class="cancel-button btn btn-ghost">Not now</button><button id="allow-contact" value="allow" class="build-button btn btn-primary">Read activities <span>→</span></button></div>
       </form>
     </dialog>
   </body>
